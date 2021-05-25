@@ -10,7 +10,7 @@ const TodoList = (props) => {
           return (
             <div className="checkbox" >
               <label className={props.isChecked ? 'completed' : null}>
-                <input type="checkbox" id={index} key={index}
+                <input type="checkbox" id={element.id} key={element.id}
                  defaultChecked={props.isChecked}
                   onClick={props.handleClick} />
                 {element.task}</label>
