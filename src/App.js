@@ -43,6 +43,7 @@ class App extends Component {
     console.log(this.state.task.length)
     if (this.state.task && this.state.task.length <= 20) {
       var obj = {
+        id: new Date().valueOf(),
         task: this.state.task,
         isCompleted: false,
         createdDate: new Date(),
@@ -55,10 +56,15 @@ class App extends Component {
 
   }
 
-  click = (e) => {
+  completeTask = (e) => {
     console.log(e.target.id)
     const id = e.target.id;
-    this.state.data[id].isCompleted = true;
+    const elementsIndex = this.state.data.findIndex(element => element.id === id);
+    let newArray = [...this.state.data];
+    newArray[elementsIndex] = { ...newArray[elementsIndex], completed: !newArray[elementsIndex].completed }
+    this.setState({
+      data: newArray
+    });
     localStorage.setItem('task', JSON.stringify(this.state.data));
   }
   sortTask = () => {
@@ -100,7 +106,7 @@ class App extends Component {
                 <div className="content">
                   <div>
                     <label className="todo">To-do</label>
-                    <TodoList todos={isCompleted} handleClick={this.click} isChecked={this.state.isChecked} />
+                    <TodoList todos={isCompleted} handleClick={this.completeTask} isChecked={this.state.isChecked} />
                   </div>
                   <div>
                     <label className="todo">Completed</label>
