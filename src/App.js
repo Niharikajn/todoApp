@@ -61,7 +61,7 @@ class App extends Component {
     const id = e.target.id;
     const elementsIndex = this.state.data.findIndex(element => element.id === id);
     let newArray = [...this.state.data];
-    newArray[elementsIndex] = { ...newArray[elementsIndex], completed: !newArray[elementsIndex].completed }
+    newArray[elementsIndex] = { ...newArray[elementsIndex], isCompleted: !newArray[elementsIndex].isCompleted }
     this.setState({
       data: newArray
     });
