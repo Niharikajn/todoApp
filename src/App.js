@@ -40,7 +40,6 @@ class App extends Component {
 
   }
   addTask = () => {
-    console.log(this.state.task.length)
     if (this.state.task && this.state.task.length <= 20) {
       var obj = {
         id: new Date().valueOf(),
@@ -57,16 +56,17 @@ class App extends Component {
   }
 
   completeTask = (e) => {
-    console.log(e.target.id)
+   
     const id = e.target.id;
-    const elementsIndex = this.state.data.findIndex(element => element.id === id);
+    const elementsIndex = this.state.data.findIndex(element => element.id == id);
     let newArray = [...this.state.data];
     newArray[elementsIndex] = { ...newArray[elementsIndex], isCompleted: !newArray[elementsIndex].isCompleted }
     this.setState({
       data: newArray
     });
-    localStorage.setItem('task', JSON.stringify(this.state.data));
+    localStorage.setItem('task', JSON.stringify(newArray));
   }
+
   sortTask = () => {
     const sortedTodos = [].concat(this.state.data)
       .sort((a, b) => a.task > b.task ? 1 : -1)
@@ -82,7 +82,7 @@ class App extends Component {
       Completed = this.state.data.filter((element, index, array) => {
         return element.isCompleted;
       })
-      console.log("that", this.state.data);
+    
     }
 
     return (
