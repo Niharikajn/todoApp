@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { TextField, Button, IconButton, Card, Divider, Switch, Tooltip, FormGroup, Checkbox, FormControlLabel, makeStyles } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -59,12 +59,15 @@ const TodoComponent = () => {
     const addTask = () => {
     let copyList = [...tasks];
     copyList = [...copyList, { text: newTask, done: false}];
+
+    localStorage.setItem('todos', JSON.stringify(copyList));
     setTasks(copyList);
     setNewTask("");
     };
 
     const deleteTask = e => {
         const remaingDeleteTasks = tasks.filter((item) => item.text !== e);
+        localStorage.setItem('todos', JSON.stringify(remaingDeleteTasks));
         setTasks(remaingDeleteTasks);
         setNewTask("");
 
@@ -72,10 +75,22 @@ const TodoComponent = () => {
 
    const toggle = item => {
         let mapped = tasks.map((e)=>{return e.text===item? {...e, done:!e.done} : {...e}});
+        localStorage.setItem('todos', JSON.stringify(mapped));
         setTasks(mapped);
         setNewTask("");
       };
 
+
+      useEffect(()=>{
+          const getTodos=localStorage.getItem('todos');
+          if(getTodos){
+              let response=JSON.parse(getTodos);
+              console.log(response);
+              setTasks(response);
+              return;
+          }
+          setNewTask([]);
+      },[])
 
     return (
         <div id="main" className={classes.main}>
